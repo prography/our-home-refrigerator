@@ -1,0 +1,24 @@
+.DS_Store
+webfront/node_modules/
+webfront/dist/
+webfront/npm-debug.log*
+webfront/yarn-debug.log*
+webfront/yarn-error.log*
+webfront//test/e2e/reports/
+webfront/selenium-debug.log
+
+# Editor directories and files
+webfront/.idea
+webfront/.vscode
+webfront/*.suo
+webfront/*.ntvs*
+webfront/*.njsproj
+webfront/*.sln
+
+
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
