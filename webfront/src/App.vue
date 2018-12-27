@@ -1,38 +1,55 @@
 <template>
   <div id="app">
-    
-    <div class="color-header">
-      <Icon :color="selected" style="width: auto;">
-        vue-js-grid
-      </Icon>
-    </div>
 
-    <grid
-      :center="false"
-      :draggable="true"
-      :sortable="true"
-      :items="colors"
-      :height="80"
-      :width="80"
-      @change="change"
-      @remove="remove"
-      @click="click"
-      @sort="sort">
-      <template slot="cell" scope="props">
-        <Icon :color="props.item"
-              :index="props.index"
-              :with-button="true"
-              @remove="props.remove()"/>
-      </template>
-    </grid>
+    <v-app id="inspire">
+      <v-toolbar dark color="primary">
+        <v-toolbar-side-icon></v-toolbar-side-icon>
+        <v-toolbar-title class="white--text">Title</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon>
+          <v-icon>more_vert</v-icon>
+        </v-btn>
+      </v-toolbar>
+
+      <div class="color-header">
+        <Icon :color="selected" style="width: auto;">
+          vue-js-grid
+        </Icon>
+      </div>
+      
+      <grid
+        :center="false"
+        :draggable="true"
+        :sortable="true"
+        :items="colors"
+        :height="80"
+        :width="80"
+        @change="change"
+        @remove="remove"
+        @click="click"
+        @sort="sort">
+        <template slot="cell" scope="props">
+          <Icon :color="props.item"
+                :index="props.index"
+                :with-button="true"
+                @remove="props.remove()"/>
+        </template>
+      </grid>
+      
+      <router-view/>
+    </v-app>
     
-    <router-view/>
+
+
   </div>
 </template>
+
 
 <script>
 import Icon from './Icon.vue'
 import { generateRGBColors } from './util'
+import WebFontLoader from 'webfontloader'
+
 
 export default {
   name: 'App',
@@ -88,5 +105,4 @@ export default {
   padding: 10px 0;
   box-sizing: border-box;
 }
-
 </style>
