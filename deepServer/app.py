@@ -4,18 +4,22 @@ from userMange.login import login
 import json
 from config.config import get_config
 import os
+import numpy as np
+import cv2
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def index_page():
     return 'hi'
 
 
-@app.route('/detect')
+@app.route('/detect', methods=['GET', 'POST'])
 def detect_page():
-    file = request.files['file']
-    file.save(os.path.join('temp', file.filename))
+    req = request
+    nparr = np.fromstring(req.data, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     return 'complete'
 
 
@@ -27,6 +31,10 @@ def login_page():
     data[config.user_id_name] = id
     return json.dumps(data, ensure_ascii=False)
 
+
+@app.route('/camera')
+def camera_page():
+    pass
 
 if __name__ == '__main__':
     IP = str(socket.gethostbyname(socket.gethostname()))
