@@ -14,15 +14,16 @@ def index_page():
 
 @app.route('/detect')
 def detect_page():
+    req = request.get_json(force=True)
     return
 
 
 @app.route('/login')
 def login_page():
     req = request.get_json(force=True)
-    num, ip = login(req, config.user_info_dir, config.user_info_db)
+    num, id = login(req, config.user_info_dir, config.user_info_db)
     data = {}
-    data[config.user_id_name] = ip
+    data[config.user_id_name] = id
     return json.dumps(data, ensure_ascii=False)
 
 
