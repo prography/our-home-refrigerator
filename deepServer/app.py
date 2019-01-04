@@ -3,7 +3,7 @@ import socket
 from userMange.login import login
 import json
 from config.config import get_config
-
+import os
 
 app = Flask(__name__)
 
@@ -14,8 +14,9 @@ def index_page():
 
 @app.route('/detect')
 def detect_page():
-    req = request.get_json(force=True)
-    return
+    file = request.files['file']
+    file.save(os.path.join('temp', file.filename))
+    return 'complete'
 
 
 @app.route('/login')

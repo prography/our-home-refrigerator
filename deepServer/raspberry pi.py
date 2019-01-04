@@ -17,6 +17,8 @@ def capture_page():
             return "webcam is not detected"
 
     ret, image = cam.read()
+    while not ret:
+        ret, image = cam.read()
     if (ret):
         image = cv2.flip(image, 1)
         if not os.path.exists('./temp'):
