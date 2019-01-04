@@ -22,8 +22,7 @@ def login_page():
     req = request.get_json(force=True)
     num, ip = login(req, config.user_info_dir, config.user_info_db)
     data = {}
-    data['num'] = num
-    data['ip'] = ip
+    data[config.user_id_name] = ip
     return json.dumps(data, ensure_ascii=False)
 
 
