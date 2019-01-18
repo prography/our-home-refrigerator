@@ -13,7 +13,7 @@ login_URL = "http://192.168.118.1:12345/login"
 id = {}
 id[config.user_id_name] = 'AVDF'
 
-response = requests.post(login_URL, json=id)
+'''response = requests.post(login_URL, json=id)'''
 
 headers, img_encoded= imgCap()
 response = requests.post(detect_URL, data=img_encoded.tostring(), headers=headers)
