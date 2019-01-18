@@ -19,8 +19,7 @@ def login(req, user_dir, db_name):
         for info in curs.fetchall():
             if info[1] == id:
                 num = info[0]
-                ip = info[2]
-                print("[*] login %s/%s/%s raspberry pi" % (str(num), str(id),str(ip)))
+                print("[*] login %s/%s raspberry pi" % (str(num), str(id)))
                 return num, id
     print("[!] there is no information of raspberry pi")
     num, id = register(req, user_dir, db_name)

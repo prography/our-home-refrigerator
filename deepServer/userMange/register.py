@@ -6,7 +6,6 @@ from config.config import get_config
 def register(req, user_dir, db_name):
     config = get_config()
     id = req[config.user_id_name]
-    ip = req[config.ip_name]
     path = os.path.join(user_dir, db_name)
 
     if not os.path.exists(path):
@@ -17,7 +16,7 @@ def register(req, user_dir, db_name):
         curs.execute("SELECT * FROM userManage")
         num = str(len(curs.fetchall()) + 1)
         conn.commit()
-        curs.execute("insert into userManage values ('" + num + "', '" + id + "', '" + ip + "')")
+        curs.execute("insert into userManage values ('" + num + "', '" + id + "')")
         conn.commit()
 
     return num, id

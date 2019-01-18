@@ -15,15 +15,16 @@ def index_page():
     return 'hi'
 
 
-@app.route('/detect', methods=['GET', 'POST'])
+@app.route('/detect', methods=['POST'])
 def detect_page():
     req = request
     nparr = np.fromstring(req.data, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    print(img)
     return 'complete'
 
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login_page():
     req = request.get_json(force=True)
     num, id = login(req, config.user_info_dir, config.user_info_db)
