@@ -7,6 +7,8 @@ parser.add_argument('--user_info_db', type=str, default='userInfo.db', help='nam
 parser.add_argument('--ip_name', type=str, default='ip')
 parser.add_argument('--user_id_name', type=str, default='user_id')
 parser.add_argument('--respond_name', type=str, default='res')
+parser.add_argument('--image_title_name', type=str, default='image_name')
+parser.add_argument('--image_name', type=str, default='image')
 
 
 def get_config():

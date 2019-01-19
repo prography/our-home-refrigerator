@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 import socket
 from userMange.login import login
 import json
@@ -9,20 +9,20 @@ import cv2
 from detection.switch.switch import switch
 from detection.switch.delete import delete_user_command
 from userMange.register import register
+import scipy.misc
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def index_page():
-    return 'hi'
+    return send_from_directory(directory='temp', filename='8.PNG')
 
 
 @app.route('/check_command', methods=['POST'])
 def check_command():
     req = request.get_json(force=True)
     res = delete_user_command(req)
-    print(res)
     return str(res)
 
 
@@ -31,8 +31,17 @@ def detect_page():
     req = request
     nparr = np.fromstring(req.data, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    print(img)
-    return 'complete'
+    img = img[..., ::-1]
+    scipy.misc.imsave(os.path.join('temp', 'get.PNG'), img)
+    return send_from_directory(directory='temp', filename='get.PNG')
+
+
+@app.route('/detect_ras', methods=['POST'])
+def detect_ras_page():
+    req = request
+    nparr = np.fromstring(req.data, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)[..., ::-1]
+    return send_from_directory(directory='temp', filename='get.PNG')
 
 
 @app.route('/login', methods=['POST'])
@@ -56,5 +65,5 @@ def camera_page():
 if __name__ == '__main__':
     IP = str(socket.gethostbyname(socket.gethostname()))
     config = get_config()
-    app.run(host=IP, debug=True, port=12345)
+    app.run(host=IP, debug=True, port=5000)
 
