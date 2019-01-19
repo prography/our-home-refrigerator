@@ -22,7 +22,5 @@ def login(req, user_dir, db_name):
                 print("[*] login %s/%s raspberry pi" % (str(num), str(id)))
                 return num, id
     print("[!] there is no information of raspberry pi")
-    num, id = register(req, user_dir, db_name)
-    print("[*] create information of raspberry pi")
 
-    return num, id
+    return False, False

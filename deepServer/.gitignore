@@ -3,4 +3,4 @@ __pycache__
 userInfo
 client.py
 temp
-detection
+detection/user_data
