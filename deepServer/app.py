@@ -10,6 +10,7 @@ from detection.switch.switch import switch
 from detection.switch.delete import delete_user_command
 from userMange.register import register
 import scipy.misc
+from detection.pytorch_ssd.run_ssd_example import run_ssd
 
 app = Flask(__name__)
 
@@ -31,7 +32,6 @@ def detect_page():
     req = request
     nparr = np.fromstring(req.data, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    img = img[..., ::-1]
     scipy.misc.imsave(os.path.join('temp', 'get.PNG'), img)
     return send_from_directory(directory='temp', filename='get.PNG')
 
@@ -40,7 +40,9 @@ def detect_page():
 def detect_ras_page():
     req = request
     nparr = np.fromstring(req.data, np.uint8)
-    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)[..., ::-1]
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    img, total_result = run_ssd(img)
+    scipy.misc.imsave(os.path.join('temp', 'get.PNG'), img)
     return send_from_directory(directory='temp', filename='get.PNG')
 
 

@@ -2,10 +2,10 @@ import requests
 from imgCap import imgCap
 from config.config import get_config
 from time import sleep
-import time
 import os
 import cv2
 import numpy as np
+from time import time
 
 config = get_config()
 
@@ -20,32 +20,33 @@ ras_URL = URL + 'detect_ras'
 
 # wire raspberry pi on server
 response = requests.post(login_URL, json=id)
-time = 0
+_time = 0
 
 
 def cap_img(URL):
-    print('[*] activate camera')
+    start_time = time()
     # Transmit image
     headers, img_encoded, file_name = imgCap()
-    print('[*] %s save image' % (file_name))
-    response = requests.post(detect_URL, data=img_encoded.tostring(), headers=headers)
+    response = requests.post(URL, data=img_encoded.tostring(), headers=headers)
     nparr = np.fromstring(response.content, np.uint8)
     img_np = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    print('[*] send %s image to %s' % (file_name, URL))
+    print('    duration : %f' % (time() - start_time))
     return img_np
 #    open(os.path.join('temp', 'google.PNG'), 'wb').write(response.content)
 
 
 while True:
-    time = time + 1
+    _time = _time + 1
     # check command of raspberry pi
     check = requests.post(command_URL, json=id)
     if str(check.text) == id[config.user_id_name]:
         cap_img(detect_URL)
-    sleep(1)
 
-    if time % (5 * 1) == 0:
+    if _time % (5 * 100) == 0:
         cap_img(detect_URL)
 
+    print(_time)
     img = cap_img(ras_URL)
     cv2.imshow('frame', img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
