@@ -9,6 +9,7 @@ parser.add_argument('--user_id_name', type=str, default='user_id')
 parser.add_argument('--respond_name', type=str, default='res')
 parser.add_argument('--image_title_name', type=str, default='image_name')
 parser.add_argument('--image_name', type=str, default='image')
+parser.add_argument('--server_url', type=str, default='http://ec2-13-125-237-47.ap-northeast-2.compute.amazonaws.com')
 
 
 def get_config():

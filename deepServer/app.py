@@ -11,6 +11,8 @@ from detection.switch.delete import delete_user_command
 from userMange.register import register
 import scipy.misc
 from detection.pytorch_ssd.run_ssd_example import run_ssd
+import requests
+from detection.pytorch_ssd.get_food_name import getfood_name
 
 app = Flask(__name__)
 
@@ -27,16 +29,26 @@ def check_command():
     return str(res)
 
 
-@app.route('/detect', methods=['POST'])
-def detect_page():
+@app.route('/detect/<username>', methods=['POST'])
+def detect_page(username):
+    URL = config.server_url
+    URL_detect = URL + ('/nzg/%s/deep/receive' % (username))
     req = request
     nparr = np.fromstring(req.data, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    img, total_result = run_ssd(img)
     scipy.misc.imsave(os.path.join('temp', 'get.PNG'), img)
+
+    headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+    data = getfood_name(total_result)
+    print(data)
+    r = requests.post(URL_detect, headers=headers, json=data)
+    print(r.text)
+
     return send_from_directory(directory='temp', filename='get.PNG')
 
 
-@app.route('/detect_ras', methods=['POST'])
+@app.route('/detect_ras', methods=['POST', 'GET'])
 def detect_ras_page():
     req = request
     nparr = np.fromstring(req.data, np.uint8)
@@ -62,6 +74,7 @@ def login_page():
 def camera_page():
     req = request.get_json(force=True)
     return str(switch(req))
+
 
 
 if __name__ == '__main__':
