@@ -26,11 +26,11 @@ _time = 0
 def cap_img(URL):
     start_time = time()
     # Transmit image
-    headers, img_encoded, file_name = imgCap()
+    headers, img_encoded = imgCap()
     response = requests.post(URL, data=img_encoded.tostring(), headers=headers)
     nparr = np.fromstring(response.content, np.uint8)
     img_np = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    print('[*] send %s image to %s' % (file_name, URL))
+    print('[*] send %s image to %s' % ("new.PNG", URL))
     print('    duration : %f' % (time() - start_time))
     return img_np
 #    open(os.path.join('temp', 'google.PNG'), 'wb').write(response.content)
